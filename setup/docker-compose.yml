@@ -4,8 +4,9 @@ x-redash-service: &redash-service
   depends_on:
     - postgres
     - redis
-  env_file: /opt/redash/env
+  env_file: $HOME/docker-data/redash/env
   restart: always
+
 services:
   server:
     <<: *redash-service
@@ -37,9 +38,9 @@ services:
     restart: always
   postgres:
     image: postgres:9.5-alpine
-    env_file: /opt/redash/env
+    env_file: $HOME/docker-data/redash/env
     volumes:
-      - /opt/redash/postgres-data:/var/lib/postgresql/data
+      - $HOME/docker-data/redash/postgres-data:/var/lib/postgresql/data
     restart: always
   nginx:
     image: redash/nginx:latest
@@ -50,3 +51,4 @@ services:
     links:
       - server:redash
     restart: always
+
